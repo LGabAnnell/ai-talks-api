@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: ai-talks-api
+  jpa:
+    open-in-view: false
+  datasource:
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: HikariCorePool
+      max-lifetime: 1800000
+      connection-timeout: 30000
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.h2.Driver
+
+im:
+  api:
+    token: ${IM_API_TOKEN}
+    product_id: ${IM_PRODUCT_NUMBER}

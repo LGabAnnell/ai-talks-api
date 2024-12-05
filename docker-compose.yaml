@@ -1,0 +1,21 @@
+services:
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb_container
+    environment:
+      MYSQL_ROOT_PASSWORD: example_password  # Remplacez par votre mot de passe root désiré
+      MYSQL_DATABASE: example_db             # Remplacez par votre nom de base de données désiré
+      MYSQL_USER: example_user               # Remplacez par votre utilisateur désiré
+      MYSQL_PASSWORD: example_password       # Remplacez par votre mot de passe utilisateur désiré
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: C:/Users/gabriel/sqldata
