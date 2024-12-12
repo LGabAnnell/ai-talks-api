@@ -7,5 +7,6 @@ class InitialRequest(
     @NotNull val assistantModel: String,
     @NotNull val message: String,
     @NotNull val systemInstructions: String,
+    @NotNull val userInstructions: String,
     val stream: Boolean?
 )

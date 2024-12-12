@@ -30,6 +30,7 @@ class ConversationService(
                  userModel: String,
                  assistantModel: String,
                  systemInstructions: String,
+                 userInstructions: String,
                  stream: Boolean?
     ): InitiatingResponse {
         val initialResponse = imClient.postMessage(
@@ -58,6 +59,7 @@ class ConversationService(
             userModel = modelService.findByName(userModel),
             assistantModel = modelService.findByName(assistantModel),
             systemInstructions = systemInstructions,
+            userInstructions = userInstructions
         )
 
         conversationRepository.save(conversation)
@@ -134,6 +136,13 @@ class ConversationService(
             messages = listOf(Message(
                 role = "system",
                 content = conversation.systemInstructions
+            )) + messages
+        }
+
+        if (role == "assistant" && !conversation.userInstructions.isNullOrEmpty()) {
+            messages = listOf(Message(
+                role = "system",
+                content = conversation.userInstructions
             )) + messages
         }
 

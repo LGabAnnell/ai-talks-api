@@ -20,6 +20,8 @@ data class Conversation(
 
     val systemInstructions: String? = null,
 
+    val userInstructions: String? = null,
+
     @OneToMany
     @JoinTable(
         name = "ConversationMessage",

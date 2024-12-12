@@ -19,6 +19,7 @@ class TalkController(
         assistantModel = initialMessage.assistantModel,
         message = initialMessage.message,
         systemInstructions = initialMessage.systemInstructions,
+        userInstructions = initialMessage.userInstructions,
         stream = initialMessage.stream
     )
 
