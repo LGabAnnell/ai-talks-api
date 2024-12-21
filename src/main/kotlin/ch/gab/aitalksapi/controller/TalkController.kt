@@ -15,8 +15,8 @@ class TalkController(
     fun initiate(
         @RequestBody @Validated initialMessage: InitialRequest,
     ) = conversationService.initiate(
-        userModel = initialMessage.userModel,
-        assistantModel = initialMessage.assistantModel,
+        userModelName = initialMessage.userModel,
+        assistantModelName = initialMessage.assistantModel,
         message = initialMessage.message,
         systemInstructions = initialMessage.systemInstructions,
         userInstructions = initialMessage.userInstructions,

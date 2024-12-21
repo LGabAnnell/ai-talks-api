@@ -8,6 +8,7 @@ import ch.gab.aitalksapi.im.model.request.enums.IMModel
 import ch.gab.aitalksapi.im.model.response.IMResponse
 import ch.gab.aitalksapi.model.entity.Conversation
 import ch.gab.aitalksapi.model.entity.Message
+import ch.gab.aitalksapi.model.entity.Model
 import ch.gab.aitalksapi.model.repository.ConversationRepository
 import ch.gab.aitalksapi.statemachine.modelFromState
 import ch.gab.aitalksapi.statemachine.nextState
@@ -27,14 +28,17 @@ class ConversationService(
 ) {
     @Transactional
     fun initiate(message: String,
-                 userModel: String,
-                 assistantModel: String,
+                 userModelName: String,
+                 assistantModelName: String,
                  systemInstructions: String,
                  userInstructions: String,
-                 stream: Boolean?
+                 stream: Boolean?,
+                 userModelNickName: String = "",
+                 assistantModelNickname: String = "",
     ): InitiatingResponse {
+
         val initialResponse = imClient.postMessage(
-            model = IMModel.fromString(modelService.findByName(userModel).name),
+            model = IMModel.fromString(userModelName),
             messages = listOf(
                 IMMessage(
                     role = "system",
@@ -56,10 +60,10 @@ class ConversationService(
             .block()
 
         val conversation = Conversation(
-            userModel = modelService.findByName(userModel),
-            assistantModel = modelService.findByName(assistantModel),
+            userModel = modelService.save(Model(name = userModelName, nickName = userModelNickName)),
+            assistantModel = modelService.save(Model(name = assistantModelName, nickName = assistantModelNickname)),
             systemInstructions = systemInstructions,
-            userInstructions = userInstructions
+            userInstructions = userInstructions,
         )
 
         conversationRepository.save(conversation)
@@ -72,7 +76,7 @@ class ConversationService(
         return InitiatingResponse(
             message = initialResponse.choices[0].message.content,
             conversationId = conversation.id,
-            model = initialResponse.model.name
+            model = initialResponse.model.name,
         )
     }
 

@@ -18,4 +18,6 @@ class ModelService(
     fun findByName(name: String): Model = requireNotNull(modelrepository.findByName(IMModel.fromString(name).name)) {
         "The model $name does not exist."
     }
+
+    fun save(model: Model) = modelrepository.save(model)
 }

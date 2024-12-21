@@ -8,6 +8,8 @@ data class Model(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
 
-    @Column(unique = true, nullable = false)
-    val name: String = ""
+    @Column(nullable = false)
+    val name: String = "",
+
+    val nickName: String = ""
 )
